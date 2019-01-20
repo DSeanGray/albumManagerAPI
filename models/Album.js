@@ -3,10 +3,14 @@ const db = require('../db');
 
 const Album = db.define('album', {
     title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
     },
     songs: {
-        type: Sequelize.ABSTRACT
+        type: Sequelize.ABSTRACT,
+        notEmpty: false,
+        allowNull: false
     }
 },
 {

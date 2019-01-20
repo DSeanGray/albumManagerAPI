@@ -4,6 +4,7 @@ const logger = require('morgan');
 const db = require('./db');
 
 const recordRoutes = require('./api/routes/albums');
+const userRoutes = require('./api/routes/user');
 
 app.use(logger('dev'));
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.use('/albums', recordRoutes);
+app.use('/user', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
