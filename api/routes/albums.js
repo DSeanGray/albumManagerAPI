@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const checkAuth = require('../middleware/auth')
 const Album = require('../../models/Album');
 
-router.get('/', (req, res) => {
+router.get('/', checkAuth, (req, res) => {
     Album.findAll()
     .then(albums =>
         res.json(albums))
@@ -10,7 +11,7 @@ router.get('/', (req, res) => {
             console.log(err));
 });
 
-router.get('/:albumId', (req, res) => {
+router.get('/:albumId', checkAuth, (req, res) => {
     const albumId = req.params.albumId;
 
     Album.findOne(albumId)
@@ -20,7 +21,7 @@ router.get('/:albumId', (req, res) => {
             console.log(err));
 });
 
-router.post('/', (req, res) => {
+router.post('/', checkAuth, (req, res) => {
     const newAlbum = req.body;
 
     Album.create(newAlbum)
@@ -33,7 +34,7 @@ router.post('/', (req, res) => {
                 console.log(err.message)
 )});
 
-router.delete('/:albumId', (req, res, next) => {
+router.delete('/:albumId', checkAuth, (req, res, next) => {
     const albumId = req.params.albumId;
 
     Album.destroy({
