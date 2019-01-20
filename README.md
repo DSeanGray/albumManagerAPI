@@ -1,6 +1,6 @@
 # Album manager API
 
-Album manager is a pet project i have built to learn how to use jwt authentication in Node.js with an SQL database. 
+Album manager is a project i have built to learn how to use jwt authentication in Node.js with an SQL database. 
 
 ## Installation
 
@@ -16,4 +16,4 @@ npm start
 
 ## TODO
 
-Api documentation, test coverage and code cleanup to follow.
+Api documentation, test coverage and code cleanup.
