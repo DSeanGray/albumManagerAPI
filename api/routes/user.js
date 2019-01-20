@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 
 router.post('/signup', (req, res, next) => {
@@ -41,8 +42,18 @@ router.post('/login', (req, res) => {
                 });
             }
             if (result) {
+                const token = jwt.sign({
+                    email: user.email,
+                    userId: user.id
+                }, 
+                'tokenThatShouldBeHiddenSomewhere',
+                {
+                    expiresIn: '1h'
+                });
+
                 return res.status(200).json({
-                    message: 'Auth successful.'
+                    message: 'Auth successful.',
+                    token: token
                 });
             }
             res.status(401).json({
