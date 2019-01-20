@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
+const db = require('./db');
 
-const recordRoutes = require('./api/routes/records');
+const recordRoutes = require('./api/routes/albums');
 
 app.use(morgan('dev'));
-app.use(bodyParser).urlencoded({extended: false});
-app.use(bodyParser.json);
 
-app.use('/records', recordRoutes);
+db.connect();
+
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+
+app.use('/albums', recordRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
@@ -18,7 +21,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-    res.status(error.status || 500);
+    res.status = error.status || 500;
     res.json({error: {
         message: error.message
     }})
