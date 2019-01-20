@@ -1,8 +1,9 @@
 const http = require('http');
+const app = require('./app')
 
-const port = process.evn.PORT || 3000;
+const port = 3000;
 
-const server = http.createServer();
+const server = http.createServer(app);
 
 server.listen(port);
 
