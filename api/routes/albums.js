@@ -31,10 +31,10 @@ router.patch('/:albumId', (req, res, next) => {
 });
 
 router.delete('/:albumId', (req, res, next) => {
+    
     res.status(200).json({
         message: 'DELETE from /albums'
     })
 });
-
 
 module.exports = router;

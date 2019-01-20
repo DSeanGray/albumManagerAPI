@@ -1,13 +1,15 @@
 const express = require('express');
 const app = express();
-const morgan = require('morgan');
+const logger = require('morgan');
 const db = require('./db');
 
 const recordRoutes = require('./api/routes/albums');
 
-app.use(morgan('dev'));
+app.use(logger('dev'));
 
-db.connect();
+db.authenticate()
+    .then(() => console.log('PostgreSQL Database successfuly connected.'))
+    .catch(err => console.log(err));
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
