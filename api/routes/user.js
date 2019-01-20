@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../../models/User');
 
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res, next) => {
     User.findOne({
         where: {
             email: req.body.email
@@ -15,11 +15,44 @@ router.post('/signup', (req, res) => {
             })
         }
         else {
-            createUser(req.body);
-            res.json({message: 'User created.'});
+            next();
+        }
+    })}, function (req, res) {
+    createUser(req.body);
+    res.json({message: 'User created.'});
+});
+
+router.post('/login', (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
         }
     })
-    
+    .then(user => {
+        if (!user) {
+            return res.status(401).json({
+                message: 'Auth failed.'
+            });
+        }
+        bcrypt.compare(req.body.password, user.password, (err, result) => {
+            if (err) {
+                return res.status(401).json({
+                    message: 'Auth failed.'
+                });
+            }
+            if (result) {
+                return res.status(200).json({
+                    message: 'Auth successful.'
+                });
+            }
+            res.status(401).json({
+                message: 'Auth failed.'
+            });
+        })
+    })
+    .catch(err => 
+        console.log(err)
+        );
 });
 
 function createUser(userData) {
@@ -36,7 +69,11 @@ function createUser(userData) {
             };
 
             return response;
-        }).catch(err => console.log(err))});
+        })
+        .catch(err => 
+            console.log(err)
+            )
+        });
 };
 
 module.exports = router;
