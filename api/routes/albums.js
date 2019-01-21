@@ -1,52 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const checkAuth = require('../middleware/auth')
-const Album = require('../../models/Album');
+const checkAuth = require('../middleware/auth');
+const AlbumController = require('../controlers/album.controller');
+const albumComponent = new AlbumController();
 
-router.get('/', checkAuth, (req, res) => {
-    Album.findAll()
-    .then(albums =>
-        res.json(albums))
-        .catch(err => 
-            console.log(err));
-});
-
-router.get('/:albumId', checkAuth, (req, res) => {
-    const albumId = req.params.albumId;
-
-    Album.findOne(albumId)
-    .then(album =>
-        res.json(album))
-        .catch(err => 
-            console.log(err));
-});
-
-router.post('/', checkAuth, (req, res) => {
-    const newAlbum = req.body;
-
-    Album.create(newAlbum)
-        .then(album =>
-            res.json({
-                album,
-                message: 'Album insterted'
-            }))
-            .catch(err => 
-                console.log(err.message)
-)});
-
-router.delete('/:albumId', checkAuth, (req, res, next) => {
-    const albumId = req.params.albumId;
-
-    Album.destroy({
-        where: {
-            id: albumId
-        }
-    })
-    .then(() =>
-        res.json({
-            message: `Album ${albumId} Deleted`
-        })).catch(err => 
-            console.log(err))
-});
+router.get('/', checkAuth, (req, res) => albumComponent.getAllAlbums(req, res));
+router.get('/:albumId', checkAuth, (req, res) => albumComponent.getAlbumById(req, res));
+router.post('/', checkAuth, (req, res) => albumComponent.addAlbum(req, res));
+router.delete('/:albumId', checkAuth, (req, res) => albumComponent.deleteAlbumById(req, res));
 
 module.exports = router;
