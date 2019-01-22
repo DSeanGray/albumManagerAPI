@@ -3,24 +3,12 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
+const UserController = require('../controlers/users.contoller');
+const userController = new UserController();
 
 router.post('/signup', (req, res, next) => {
-    User.findOne({
-        where: {
-            email: req.body.email
-        }
-    }).then(user => {
-        if (user) {
-            res.json({
-                message: 'User Already Exists'
-            })
-        }
-        else {
-            next();
-        }
-    })}, function (req, res) {
-    createUser(req.body);
-    res.json({message: 'User created.'});
+    userController.checkUserExists(req, res, next);
+    userController.createNewUser(req, res);
 });
 
 router.post('/login', (req, res) => {
@@ -45,7 +33,7 @@ router.post('/login', (req, res) => {
                 const token = jwt.sign({
                     email: user.email,
                     userId: user.id
-                }, 
+                },
                 'tokenThatShouldBeHiddenSomewhere',
                 {
                     expiresIn: '1h'
@@ -61,30 +49,9 @@ router.post('/login', (req, res) => {
             });
         })
     })
-    .catch(err => 
+    .catch(err =>
         console.log(err)
         );
 });
-
-function createUser(userData) {
-    bcrypt.hash(userData.password, 10)
-    .then((hash) => {
-        const email = userData.email;
-        const newUser = {email, password: hash}
-
-        User.create(newUser)
-        .then(user => {
-            const response = {
-                user,
-                message: `User created for ${email}`
-            };
-
-            return response;
-        })
-        .catch(err => 
-            console.log(err)
-            )
-        });
-};
 
 module.exports = router;
