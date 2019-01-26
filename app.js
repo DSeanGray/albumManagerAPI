@@ -1,5 +1,6 @@
 'use strict';
 
+process.env.APP_ENV = 'dev';
 const express = require('express');
 const app = express();
 const logger = require('morgan');

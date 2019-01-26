@@ -4,7 +4,9 @@
   "description": "A place to manage your music",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "node",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "jest": "^24.0.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "supertest": "^3.4.2"
   }
 }
