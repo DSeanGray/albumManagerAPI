@@ -6,9 +6,21 @@ const checkAuth = require('../middleware/auth');
 const AlbumController = require('../controlers/album.controller');
 const albumComponent = new AlbumController();
 
-router.get('/', checkAuth, (req, res) => albumComponent.getAllAlbums(req, res));
-router.get('/:albumId', checkAuth, (req, res) => albumComponent.getAlbumById(req, res));
-router.post('/', checkAuth, (req, res) => albumComponent.addAlbum(req, res));
-router.delete('/:albumId', checkAuth, (req, res) => albumComponent.deleteAlbumById(req, res));
+router.get('/',
+    checkAuth,
+    albumComponent.getAllAlbums.bind(albumComponent)
+);
+router.get('/:userId',
+    checkAuth,
+    albumComponent.getAlbumByUserId.bind(albumComponent)
+);
+router.post('/',
+    checkAuth,
+    albumComponent.addAlbum.bind(albumComponent)
+);
+router.delete('/:albumId',
+    checkAuth,
+    albumComponent.deleteAlbumById.bind(albumComponent)
+);
 
 module.exports = router;

@@ -24,6 +24,11 @@ const Album = db.define('album', {
         notEmpty: false,
         allowNull: false
     },
+    userId: {
+        type: Sequelize.INTEGER,
+        notEmpty: false,
+        allowNull: false
+    },
 },
 {
     timestamps: false

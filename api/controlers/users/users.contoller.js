@@ -80,10 +80,11 @@ class UserController {
                     {expiresIn: '1h'}
                 );
 
-                return res.status(200).json({
-                    message: 'Auth successful.',
-                    token: token
-                });
+                res.json({
+                    token: `Bearer ${token}`,
+                    message: 'Auth Successful',
+                    userId: user.id
+                }, );
             } else {
                 this.returnAuthFailed(res);
             }

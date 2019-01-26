@@ -10,10 +10,11 @@ class AlbumController {
             .catch(err => console.log(err));
     }
 
-    getAlbumById(req, res) {
-        const albumId = req.params.albumId;
+    getAlbumByUserId(req, res) {
+        const userId = req.params.userId;
+        const query = {where: {userId}};
 
-        Album.findOne(albumId)
+        Album.findAll(query)
             .then(album => res.json(album))
             .catch(err => console.log(err));
     }
