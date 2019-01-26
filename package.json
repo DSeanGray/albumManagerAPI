@@ -14,7 +14,7 @@
   "author": "David",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
@@ -24,6 +24,7 @@
     "sequelize": "^4.42.0"
   },
   "devDependencies": {
+    "jest": "^24.0.0",
     "nodemon": "^1.18.9"
   }
 }

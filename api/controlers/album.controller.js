@@ -1,3 +1,5 @@
+'use strict';
+
 const Album = require('../../models/Album');
 
 class AlbumController {
