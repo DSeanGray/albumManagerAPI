@@ -27,7 +27,7 @@ class AlbumController {
                     album,
                     message: 'Album created.'
                 }))
-            .catch(err => console.log(err.message));
+            .catch(err => console.log(err));
     }
 
     deleteAlbumById(req, res) {

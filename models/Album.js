@@ -27,7 +27,7 @@ const Album = db.define('album', {
     userId: {
         type: Sequelize.INTEGER,
         notEmpty: false,
-        allowNull: false
+        allowNull: false,
     },
 },
 {
